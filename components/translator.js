@@ -58,35 +58,8 @@ console.log(cleanArray, cleanArray.length);
 
     else {return "British words found"}
 }
-
 }
 
-
-americanToBritish(text) {
-//amerian objects if needed later, shortened for use in other functions
-    //let americanOnlyObj = Object.keys(americanOnly);
-    //let americanSpellingObj = Object.keys(americanToBritishSpelling);
-    //let americanTitlesObj = Object.keys(americanToBritishTitles);
-
-//arr of all possible american words to translate
-let allAmerican = Object.keys(americanOnly).concat(Object.keys(americanToBritishSpelling), Object.keys(americanToBritishTitles));
-
-let textArr = text.split(" ")
-
-//below checks for all matching words!
-    //hightlight and translate these
-let checkAmericanArr = Array.from(allAmerican).filter(word => textArr.includes(word));
-
-//returns words that DO NOT match British only words
-    //do not highlight or translate these
-let cleanArray = textArr.filter(element => checkAmericanArr.every(item => !element.includes(item)));
-
-
-console.log(checkAmericanArr);
-console.log(cleanArray);
-
-
-}
 
 getValueWithKey(obj, targetValues) {
 
@@ -107,25 +80,77 @@ getValueWithKey(obj, targetValues) {
     return null; // Return null if no match is found
   }
 
+americanToBritish(text) {
+
+let textArr = text.split(" ")
+let resArr = []
+
+//arr of all possible american words to translate
+let allAmerican = Object.keys(americanOnly).concat(Object.keys(americanToBritishSpelling), Object.keys(americanToBritishTitles));
+
+//below checks for all matching words in textArr!
+let checkAmericanArr = Array.from(allAmerican).filter(word => textArr.includes(word));
+
+  checkAmericanArr.forEach(word => { 
+
+    let americanOnlyCheck = this.getValueWithKey(americanOnly, word);
+    
+      if (americanOnlyCheck!== null)
+        {resArr.push(americanOnlyCheck);}
+
+    let americanSpellingCheck = this.getValueWithKey(americanToBritishSpelling, word);
+
+      if (americanSpellingCheck!== null)
+        {resArr.push(americanSpellingCheck);}
+
+    let americanTitleCheck = this.getValueWithKey(americanToBritishTitles, word);
+
+      if (americanTitleCheck!== null)
+        {resArr.push(americanTitleCheck);}
+
+  })
+
+let i =0;
+let resObj = Object.fromEntries(resArr);
+
+  for (const [key, value] of Object.entries(resObj))
+  {
+    const regAm = new RegExp(key, 'gi');
+      if (regAm.test(text))
+        {text = text.replace(regAm, value);
+            i++;
+        } 
+  }
+
+//below individually checks each js sheet, returning an error if somehow making it to americantoBritish  when noNeed === true and no words to translate are found
+
+let checkAmericanOnly = Array.from(Object.keys(americanOnly)).filter(word => textArr.includes(word));
+let checkAmericanSpelling = Array.from(Object.keys(americanToBritishSpelling)).filter(word => textArr.includes(word));
+let checkAmericanTitles = Array.from(Object.keys(americanToBritishTitles)).filter(word => textArr.includes(word));
+
+if (checkAmericanOnly.length === 0 && checkAmericanSpelling === 0 && checkAmericanTitles === 0) 
+    {console.log("Shouldn't have made it here American")}
+
+return text
+}
+
+
 britishToAmerican(text) {
 
- let britishWordArr = []   
-//arr of all possible american words to translate
+//arr of all possible British words to translate
 let allBritish = Object.keys(britishOnly).concat(Object.values(americanToBritishSpelling), Object.values(americanToBritishTitles));
 
 let textArr = text.split(" ")
-
-//below checks for all matching words!
-    //hightlight and translate these
-let checkBritishArr = Array.from(allBritish).filter(word => textArr.includes(word));
-//text that does need translation
-
 let resArr = []
 
+//returns all matching words needing translation
+let checkBritishArr = Array.from(allBritish).filter(word => textArr.includes(word));
+
+
+//goes through words to translate, returns key, value pair with spans added to translated values
+
 checkBritishArr.forEach(word => { 
- //get keys/values, get rid of null, then push to resArr
-    //push to text??
-    //new text with regular span on each side and then addd highlighted word in span?
+
 let britOnlyCheck = this.getValueWithKey(britishOnly, word);
     if (britOnlyCheck!== null)
     {
@@ -142,51 +167,33 @@ let britTitleCheck = this.getKeyWithValue(americanToBritishTitles, word);
     {
         resArr.push(britTitleCheck)}
 })
-//resArr.push(this.getValueWithKey(britishOnly, word))
-console.log(resArr);
-//restArr[0][0] === initial word, resArr[0][1] === translated word
+
 let i = 0;
 let resObj = Object.fromEntries(resArr);
-console.log(resObj);
 
 for (const [key, value] of Object.entries(resObj)) {
-    const regIt = new RegExp(key, 'gi');
-    if (regIt.test(text)) {
-        text = text.replace(regIt, value);
+    const regBrit = new RegExp(key, 'gi');
+    if (regBrit.test(text)) {
+        text = text.replace(regBrit, value);
         i++;
     }
 }
-console.log(text)
 
-
-
-//console.log(textArr)
-//returns words that DO NOT match British only words
-    //do not highlight or translate these
-let cleanArray = textArr.filter(element => checkBritishArr.every(item => !element.includes(item)));
-
-//clean array is all text that doesn't need translation
-
-// start find obj for translation
+//below individually checks each js sheet, returning an error if somehow making it to britishToAmerican when noNeed === true and no words to translate are found
 
 let checkBritishOnly = Array.from(Object.keys(britishOnly)).filter(word => textArr.includes(word));
 
-
 let checkBritishSpellingOnly = Array.from(Object.values(americanToBritishSpelling)).filter(word => textArr.includes(word));
 
-
 let checkBritishTitlesOnly = Array.from(Object.values(americanToBritishTitles)).filter(word => textArr.includes(word));
-
 
 
 if (checkBritishOnly.length === 0 && checkBritishSpellingOnly.length === 0 && checkBritishTitlesOnly.length === 0) 
     {console.log("Shouldn't have made it here British") }
 
-//let finalText = `<span>${text}</span>`;
 return text
 
 }
-
 
 }
 

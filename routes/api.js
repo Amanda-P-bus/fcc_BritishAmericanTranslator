@@ -30,17 +30,19 @@ module.exports = function (app) {
 
       const shouldTranslate = translator.noNeed(text, locale)
 
-      console.log(shouldTranslate + " should");
       if (shouldTranslate === "British words found")
       {
         let resObj = { text: text, translation: translator.britishToAmerican(text) }
-      return res.json(resObj)
+        
+        return res.json(resObj)
       }
-      
+
       if (shouldTranslate === "American words found")
-        {console.log("move to highlighting American")
-        //translator.americanToBritish(text)
-      }
+        {
+          let resObj = { text: text, translation: translator.americanToBritish(text) }
+
+          return res.json(resObj)
+        }
 
       if (shouldTranslate === "No British words found" && shouldTranslate === "No American words found")
       {res.json("Everything looks good to me!")}
