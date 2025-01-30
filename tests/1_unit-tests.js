@@ -14,31 +14,36 @@ test('Translate Mangoes are my favorite fruit.', function (done) {
     assert.equal(translator.americanToBritish('Mangoes are my favorite fruit.'), 'Mangoes are my <span class="highlight">favourite</span> fruit.');
     done();
 })
-/*
+
 //2. Translate I ate yogurt for breakfast. to British English
 test('Translate I ate yogurt for breakfast.', function (done) {
-
-    done();
+    assert.equal(
+        translator.americanToBritish("I ate yogurt for breakfast."),
+        "I ate <span class=\"highlight\">yoghurt</span> for breakfast."
+      );
+      done();
 })
 
 //3. Translate We had a party at my friend's condo. to British English
 test('Translate We had a party at my friend\'s condo.', function (done) {
-    
+    assert.equal(translator.americanToBritish('We had a party at my friend\'s condo'), 'We had a party at my friend\'s <span class=\"highlight\">flat</span>');
     done();
 })
 
 //4. Translate Can you toss this in the trashcan for me? to British English
 test('Translate Can you toss this in the trashcan for me?', function (done) {
+    assert.equal(translator.americanToBritish('Can you toss this in the trashcan for me?'), 'Can you toss this in the <span class=\"highlight\">bin</span> for me?');
 
     done();
 })
 
 //5. Translate The parking lot was full. to British English
 test('Translate The parking lot was full.', function (done) {
+    assert.equal(translator.americanToBritish('The parking lot was full'), 'The carpark was full');
 
     done();
 })
-
+/*
 //6. Translate Like a high tech Rube Goldberg machine. to British English
 test('Translate Like a high tech Rube Goldberg machine.', function (done) {
 

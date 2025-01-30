@@ -13,21 +13,18 @@ if (locale === 'american-to-british') {
 //arr of all possible american words to translate
 let allAmerican = Object.keys(americanOnly).concat(Object.keys(americanToBritishSpelling), Object.keys(americanToBritishTitles));
 
-let textArr = text.split(" ")
-
 //below checks for all matching words!
     //hightlight and translate these
-let checkAmericanArr = Array.from(allAmerican).filter(word => textArr.includes(word));
+
+let checkAmericanArr = Array.from(allAmerican).filter(word => text.includes(word))
 
 //returns words that DO NOT match British only words
     //do not highlight or translate these
-let cleanArray = textArr.filter(element => checkAmericanArr.every(item => !element.includes(item)));
+//let cleanArray = textArr.filter(element => checkAmericanArr.every(item => !element.includes(item)));
 
     if (checkAmericanArr.length === 0 && !(/(\d?\d)\:(\d\d?)/g).test(text)) 
         {return false}
     
-  
-
     else {return true}
 }
 
@@ -38,15 +35,14 @@ if (locale === 'british-to-american') {
 let allBritish = Object.keys(britishOnly).concat(Object.values(americanToBritishSpelling), Object.values(americanToBritishTitles));
 
 
-let textArr = text.split(" ");
 
 //below checks for all matching words!
     //hightlight and translate these
-let checkBritishArr = Array.from(allBritish).filter(word => textArr.includes(word));
+let checkBritishArr = Array.from(allBritish).filter(word => text.includes(word));
 
 //returns words that DO NOT match British only words
     //do not highlight or translate these
-let cleanArray = textArr.filter(element => checkBritishArr.every(item => !element.includes(item)));
+//let cleanArray = textArr.filter(element => checkBritishArr.every(item => !element.includes(item)));
 
 
     if (checkBritishArr.length === 0 && !(/(\d?\d)\.(\d\d?)/g).test(text))
@@ -81,17 +77,22 @@ americanToBritish(text) {
 if (/(\d?\d)\:(\d\d?)/g)
     {text = text.replace(/(\d?\d)\:(\d\d?)/g, `<span class="highlight">$1.$2</span>`) } 
 
-let textArr = text.split(" ")
-let resArr = []
 
+let resArr = []
+let textArr = text.split("")
 
 //arr of all possible american words to translate
 let allAmerican = Object.keys(americanOnly).concat(Object.keys(americanToBritishSpelling), Object.keys(americanToBritishTitles));
 
+let firstCheck = Array.from(allAmerican).filter(word => text.includes(word))
+
 //below checks for all matching words in textArr!
 let checkAmericanArr = Array.from(allAmerican).filter(word => textArr.includes(word));
 
-  checkAmericanArr.forEach(word => { 
+
+console.log(firstCheck, checkAmericanArr);
+
+  firstCheck.forEach(word => { 
 
     let americanOnlyCheck = this.getValueWithKey(americanOnly, word);
     
@@ -143,11 +144,10 @@ if (/(\d?\d)\.(\d\d?)/g)
 //arr of all possible British words to translate
 let allBritish = Object.keys(britishOnly).concat(Object.values(americanToBritishSpelling), Object.values(americanToBritishTitles));
 
-let textArr = text.split(" ")
-let resArr = []
+let textArr = text.split("");
 
 //returns all matching words needing translation
-let checkBritishArr = Array.from(allBritish).filter(word => textArr.includes(word));
+let checkBritishArr = Array.from(allBritish).filter(word => text.includes(word));
 
 
 //goes through words to translate, returns key, value pair with spans added to translated values
