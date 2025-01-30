@@ -17,8 +17,9 @@ module.exports = function (app) {
       const americanToBritishTitlesArr = allWords.americanToBritishTitlesArr;
 
         
-      if (!locale)
+      if (!locale || text === undefined)
       {return res.json({ error: 'Required field(s) missing' })}
+
 
       if (!text)
         {return res.json({ error: 'No text to translate' })}
