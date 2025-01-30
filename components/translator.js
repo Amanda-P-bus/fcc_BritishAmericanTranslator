@@ -179,15 +179,11 @@ let checkBritishTitlesOnly = Array.from(Object.values(americanToBritishTitles)).
 
 
 
-if (checkBritishOnly.length === 0) 
-    {console.log("Check British Only === 0") }
-if (checkBritishSpellingOnly.length === 0) 
-    {console.log("Check British Spelling Only === 0") }
-if (checkBritishTitlesOnly.length === 0) 
-    {console.log("Check British Titles Only === 0") }
+if (checkBritishOnly.length === 0 && checkBritishSpellingOnly.length === 0 && checkBritishTitlesOnly.length === 0) 
+    {console.log("Shouldn't have made it here British") }
 
 //let finalText = `<span>${text}</span>`;
-else {return text}
+return text
 
 }
 

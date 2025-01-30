@@ -32,10 +32,11 @@ module.exports = function (app) {
 
       console.log(shouldTranslate + " should");
       if (shouldTranslate === "British words found")
-      {console.log("move to highlighting British")
-        console.log(translator.britishToAmerican(text) + " api")
-        res.json(translator.britishToAmerican(text))
+      {
+        let resObj = { text: text, translation: translator.britishToAmerican(text) }
+      return res.json(resObj)
       }
+      
       if (shouldTranslate === "American words found")
         {console.log("move to highlighting American")
         //translator.americanToBritish(text)
