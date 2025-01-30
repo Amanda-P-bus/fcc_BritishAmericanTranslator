@@ -65,7 +65,7 @@ test('Translate No Mr. Bond, I expect you to die.', function (done) {
 
 //9. Translate Dr. Grosh will see you now. to British English
 test('Translate Dr. Grosh will see you now.', function (done) {
-    assert.equal(translator.americanToBritish('Dr. Grosh will see you now.'), '<span class=\"highlight\">Dr </span>Grosh will see you now.');
+    assert.equal(translator.americanToBritish('Dr. Grosh will see you now.'), '<span class=\"highlight\">Dr</span> Grosh will see you now.');
     done();
 })
 
@@ -133,7 +133,7 @@ test('Translate Have you met Mrs Kalyani?', function (done) {
 
 //19. Translate Prof Joyner of King's College, London. to American English
 test('Translate Prof Joyner of King\'s College, London.', function (done) {
-    assert.equal(translator.britishToAmerican('Prof Joyner of King\'s College, London'), '<span class="highlight">Prof. </span> Joyner of King\'s College, London');
+    assert.equal(translator.britishToAmerican('Prof Joyner of King\'s College, London'), '<span class="highlight">Prof.</span> Joyner of King\'s College, London');
     done();
 })
 
