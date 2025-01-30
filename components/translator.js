@@ -22,14 +22,14 @@ let checkAmericanArr = Array.from(allAmerican).filter(word => textArr.includes(w
 //returns words that DO NOT match British only words
     //do not highlight or translate these
 let cleanArray = textArr.filter(element => checkAmericanArr.every(item => !element.includes(item)));
-    if (checkAmericanArr.length === 0) 
-        {return "No American words found"}
-    else {return "American words found"}
 
-console.log(checkAmericanArr);
-console.log(cleanArray);}
+    if (checkAmericanArr.length === 0 && !(/(\d?\d)\:(\d\d?)/g).test(text)) 
+        {return false}
+    
+  
 
-
+    else {return true}
+}
 
 if (locale === 'british-to-american') {
 
@@ -49,17 +49,13 @@ let checkBritishArr = Array.from(allBritish).filter(word => textArr.includes(wor
 let cleanArray = textArr.filter(element => checkBritishArr.every(item => !element.includes(item)));
 
 
-console.log(checkBritishArr, checkBritishArr.length);
-console.log(cleanArray, cleanArray.length);
+    if (checkBritishArr.length === 0 && !(/(\d?\d)\.(\d\d?)/g).test(text))
+           { return false}
 
 
-    if (checkBritishArr.length === 0) 
-        {return "No British words found"}
-
-    else {return "British words found"}
+    else {return true}
 }
 }
-
 
 getValueWithKey(obj, targetValues) {
 
@@ -82,8 +78,12 @@ getValueWithKey(obj, targetValues) {
 
 americanToBritish(text) {
 
+if (/(\d?\d)\:(\d\d?)/g)
+    {text = text.replace(/(\d?\d)\:(\d\d?)/g, `<span class="highlight">$1.$2</span>`) } 
+
 let textArr = text.split(" ")
 let resArr = []
+
 
 //arr of all possible american words to translate
 let allAmerican = Object.keys(americanOnly).concat(Object.keys(americanToBritishSpelling), Object.keys(americanToBritishTitles));
@@ -136,6 +136,9 @@ return text
 
 
 britishToAmerican(text) {
+
+if (/(\d?\d)\.(\d\d?)/g)
+    {text = text.replace(/(\d?\d)\.(\d\d?)/g, `<span class="highlight">$1:$2</span>`) }  
 
 //arr of all possible British words to translate
 let allBritish = Object.keys(britishOnly).concat(Object.values(americanToBritishSpelling), Object.values(americanToBritishTitles));

@@ -10,5 +10,6 @@ module.exports = {
   'Ms.' : 'Ms',
   'Mx.' : 'Mx',
   'Dr.' : 'Dr',
-  'Prof.' : 'Prof'
+  'Prof.' : 'Prof',
+  ":" : "."
 }

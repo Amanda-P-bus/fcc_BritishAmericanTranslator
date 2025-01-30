@@ -30,22 +30,22 @@ module.exports = function (app) {
 
       const shouldTranslate = translator.noNeed(text, locale)
 
-      if (shouldTranslate === "British words found")
+      if (shouldTranslate === true && locale === "british-to-american")
       {
         let resObj = { text: text, translation: translator.britishToAmerican(text) }
         
         return res.json(resObj)
       }
-
-      if (shouldTranslate === "American words found")
+console.log(shouldTranslate)
+      if (shouldTranslate === true && locale === "american-to-british")
         {
           let resObj = { text: text, translation: translator.americanToBritish(text) }
 
           return res.json(resObj)
         }
 
-      if (shouldTranslate === "No British words found" && shouldTranslate === "No American words found")
-      {res.json("Everything looks good to me!")}
+      if (shouldTranslate === false)
+        {return res.json({ text, translation: "Everything looks good to me!" })} 
 
 
     }); //end post request
